@@ -1,0 +1,6 @@
+# 基础配置
+SECRET_KEY: 'your-secret-key-keep-safe'
+DEBUG: true
+log_level: DEBUG
+# 其他自定义配置
+DATA_DIR: './data'  # 数据存储目录

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>实时K线图表</title>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/sj.js') }}"></script>
+    <style>
+        .control-group {
+            margin: 10px 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+        }
+        #tv-attr-logo {
+            display: none;
+        }   
+        .button-group {
+            display: flex;
+            gap: 8px;  /* 按钮间间距 */
+        }
+        .control-btn {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #f5f5f5;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .control-btn.active {
+            background: #26a69a;  /* 与K线上涨颜色一致 */
+            color: white;
+            border-color: #26a69a;
+        }
+        
+        #additional-charts-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        #additional-charts-container > div {
+            flex: 1 1 calc(100% / 3); /* 假设最多3个图表，可根据实际情况调整 */
+            min-width: 200px;
+        }
+   
+        .chart-container { transition: height 0.3s ease; }
+        .chart-container.expanded { z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    </style>
+</head>
+
+<body>
+    <div class="control-group">
+        <span>币种：</span>
+        <div class="button-group" id="token-group">
+            <button class="control-btn active" data-value="BTC">BTC</button>
+            <button class="control-btn" data-value="ETH">ETH</button>
+        </div>
+
+        <span>周期：</span>
+        <div class="button-group" id="interval-group">
+            <button class="control-btn active" data-value="1">1m</button>
+            <button class="control-btn" data-value="5">5m</button>
+            <button class="control-btn" data-value="10">10m</button>
+            <button class="control-btn" data-value="15">15m</button>
+            <button class="control-btn" data-value="30">30m</button>
+            <button class="control-btn" data-value="60">1h</button>
+            <button class="control-btn" data-value="240">4h</button>
+            <!-- <button class="control-btn" data-value="1440">1d</button> -->
+        </div>
+        <button id="confirm-btn">确认</button>
+    </div>
+
+    
+    <div id="additional-charts-container"></div>
+</body>
+
+</html>

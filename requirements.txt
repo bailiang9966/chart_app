@@ -1,0 +1,8 @@
+flask
+pyyaml
+requests
+pandas
+numpy
+binance-futures-connector
+binance-connector
+flask-socketio
